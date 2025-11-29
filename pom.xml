@@ -8,11 +8,13 @@
 		<version>3.5.8</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.codingshuttleweek2.spingbootwebtutorial</groupId>
 	<artifactId>springbootwebtutorial</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>springbootwebtutorial</name>
 	<description>Demo project for Spring Boot</description>
+
 	<url/>
 	<licenses>
 		<license/>

@@ -1,12 +1,11 @@
 package com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.dto;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class EmployeeDto {
       private Long id;
      private String name;
-     private String emai;
+     private String email;
      private Integer age ;
      private LocalDate dateOfJoining;
      private Boolean isActive;
@@ -14,10 +13,10 @@ public class EmployeeDto {
 
     public EmployeeDto() {}
 
-    public EmployeeDto(Long id, String name, String emai, Integer age, LocalDate dateOfJoining, Boolean isActive) {
+    public EmployeeDto(Long id, String name, String email, Integer age, LocalDate dateOfJoining, Boolean isActive) {
         this.id = id;
         this.name = name;
-        this.emai = emai;
+        this.email = email;
         this.age = age;
         this.dateOfJoining = dateOfJoining;
         this.isActive = isActive;
@@ -39,12 +38,12 @@ public class EmployeeDto {
         this.name = name;
     }
 
-    public String getEmai() {
-        return emai;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmai(String emai) {
-        this.emai = emai;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Integer getAge() {

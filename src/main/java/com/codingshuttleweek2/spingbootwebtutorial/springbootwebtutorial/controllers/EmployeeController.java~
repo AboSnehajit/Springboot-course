@@ -101,9 +101,9 @@ public class EmployeeController {
         EmployeeDto employeeDto =employeeService.updatePartialEmployee(employeeId,updates);
 
         if (employeeDto == null)
-        {return ResponseEntity.notFound().build();}
+        {ResponseEntity.notFound().build();}
 
-        return ResponseEntity.ok(employeeDto);
+        return 
     }
 
 

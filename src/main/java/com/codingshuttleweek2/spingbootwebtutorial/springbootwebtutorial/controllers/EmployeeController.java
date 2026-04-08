@@ -3,6 +3,7 @@ package com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.contro
 import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.dto.EmployeeDto;
 import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.entities.EmployeeEntity;
 import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.services.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,7 @@ public class EmployeeController {
     }
 
     @PostMapping()
-    public  ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto inputEmployee)
+    public  ResponseEntity<EmployeeDto> createEmployee(@RequestBody  @Valid EmployeeDto inputEmployee)
     {
 //        inputEmployee.setId(100L);
 //        return inputEmployee;
@@ -73,7 +74,7 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "/{employeeId}")
-    public ResponseEntity<EmployeeDto> updateEmployeeById(@RequestBody   EmployeeDto employeeDto,
+    public ResponseEntity<EmployeeDto> updateEmployeeById(@RequestBody @Valid  EmployeeDto employeeDto,
                                           @PathVariable Long employeeId)
     {
         return ResponseEntity.ok(employeeService.updateEmployeeById(employeeId,employeeDto));

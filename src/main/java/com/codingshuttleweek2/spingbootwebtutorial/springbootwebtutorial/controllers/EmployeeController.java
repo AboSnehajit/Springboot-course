@@ -1,7 +1,7 @@
 package com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.controllers;
 
 import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.dto.EmployeeDto;
-import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.entities.EmployeeEntity;
+import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.exception.ResourceNotFoundException;
 import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.services.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -38,7 +39,6 @@ public class EmployeeController {
 //        return new EmployeeDto(Id,"Snehajit", "King@gmail.com",23, LocalDate.ofYearDay(2024,135),true);
 //        return employeeRepository.findById(Id).orElse(null);
 //          return employeeService.getEmployeeByID(Id);
-       Optional< EmployeeDto> employeeDto = employeeService.getEmployeeByID(Id);
 
 //        if (employeeDto == null)
 //        {
@@ -46,9 +46,17 @@ public class EmployeeController {
 //        }
 //        return ResponseEntity.ok(employeeDto);
 
+       Optional<EmployeeDto> employeeDto = employeeService.getEmployeeByID(Id);
           return employeeDto.map(employeeDto1 -> ResponseEntity.ok(employeeDto1))
-                  .orElse(ResponseEntity.notFound().build());
+                  .orElseThrow(() -> new ResourceNotFoundException("Employee does not exist with id " +Id));
+//                  .orElse(ResponseEntity.notFound().build());
     }
+
+
+//    @ExceptionHandler(NoSuchElementException.class)
+//    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException ex){
+//        return new ResponseEntity<>("Employee does not exist", HttpStatus.NOT_FOUND);
+//    }
 
 @GetMapping
     public ResponseEntity<List<EmployeeDto>> getAllEmployees(@RequestParam(required = false) Integer age , @RequestParam(required = false) Integer worth)
@@ -69,7 +77,6 @@ public class EmployeeController {
 //        return employeeService.createEmployee(inputEmployee);
 
         EmployeeDto savedemployeeDto = employeeService.createEmployee(inputEmployee);
-
         return  new ResponseEntity<>(savedemployeeDto, HttpStatus.CREATED);
     }
 

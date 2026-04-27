@@ -1,0 +1,112 @@
+package streamAPI;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class MainClass {
+    public static void main(String[] args) {
+
+//        Walkable obj = new WalkFast ();
+//        obj.walk(100);
+
+//          Walkable obj = new Walkable() {
+//              @Override
+//              public int walk(int steps) {
+//                  return 0;
+//              }
+//          }
+
+//           Walkable obj = (steps) ->{
+//               System.out.println("Walking fast  "+steps+"steps");
+//               return 2 * steps;
+//           };
+
+
+
+               //Lambdas
+//             Walkable obj= (steps, fast) ->{
+//                 System.out.println("Walking fast  "+steps+" steps , are you fast"+fast);
+//                 return 2* steps;
+//             };
+//
+//             Walkable obj2 = (steps, fast) -> 2* steps;
+//
+//             System.out.println(obj.walk(100, true));
+
+
+        List<String> fruits = List.of("apple", "kiwi", "cherry", "berry");
+//        Stream<String> fruitstream = fruits.stream();
+
+//        List<Integer> fruitLength = fruits
+//                .stream()
+//                .filter(fruit -> fruit.length() > 5)
+//                .map(fruit -> fruit.length())
+//                .collect(Collectors.toList());
+
+//   Inference String::length
+        Map<String, Integer> fruitMap= fruits
+                .stream()
+                .filter(fruit -> fruit.length() > 5)
+                .map(fruit -> fruit.toUpperCase())
+                .collect(Collectors.toMap(
+                        fruit ->fruit ,
+                        String::length
+                ));
+
+        
+                fruitMap.forEach((key , value ) ->
+                        System.out.println("key "+key+" value "+value));
+
+        System.out.println(fruits);
+        System.out.println(fruitMap);
+//        System.out.println(fruitLength);
+
+//        fruitstream.forEach((fruit) ->{
+//            System.out.println(fruit);
+//        });
+
+
+//        fruitstream
+//                .sorted()
+//                .map(fruit -> fruit.toUpperCase())
+//                .forEach(fruit -> System.out.println(fruit));
+
+//
+//        fruitstream
+//                .filter(fruit -> fruit.length() <5)
+//                .sorted()
+//                .map(fruit -> fruit.toUpperCase())
+//                .forEach(fruit -> System.out.println(fruit));
+
+
+
+//        fruitstream
+//                .filter(fruit -> fruit.length() <5)
+//                .sorted()
+//                .map(fruit -> fruit.length())
+//                .forEach(fruit -> System.out.println(fruit));
+
+
+
+    }
+}
+
+interface  Walkable {
+    int walk(int steps, boolean fast);
+}
+
+
+//old way
+//class  WalkFast implements Walkable{
+//
+//    @Override
+//    public int walk(int steps) {
+//        System.out.println("Walking fast  "+steps+"steps");
+//        return 2 * steps;
+//    }
+//}
+
+
+

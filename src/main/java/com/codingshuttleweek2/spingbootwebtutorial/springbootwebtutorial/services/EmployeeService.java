@@ -81,20 +81,8 @@ public class EmployeeService {
         if(!exists) throw  new ResourceNotFoundException("Employee with id "+employeeId+" was not found ");
 //        return true;
     }
-    public boolean deleteEmployeeById(Long employeeId) {
-//        if(isExistByEmployeeId(employeeId)) {
-//            employeeRepository.deleteById(employeeId);
-//            return  true;
-//        }
-//        return false;
-//        boolean exists = employeeRepository.existsById(employeeId);
-//        if (!exists) throw new ResourceNotFoundException("Employee with id "+employeeId+" was not found ");
-        isExistByEmployeeId(employeeId);
-        employeeRepository.deleteById(employeeId);
-        return true;
-    }
 
-    public EmployeeDto updatePartialEmployee(Long employeeId, Map<String, Object> updates) {
+    public EmployeeDto  updatePartialEmployee(Long employeeId, Map<String, Object> updates) {
 //        if(isExistByEmployeeId(employeeId))
 //        {
 //            // get the employee
@@ -119,8 +107,24 @@ public class EmployeeService {
         updates.forEach((field , value ) ->{
             Field fieldToBeUpdated = ReflectionUtils.findField(EmployeeEntity.class, field );
             fieldToBeUpdated.setAccessible(true);
-            ReflectionUtils.setField(fieldToBeUpdated, EmployeeEntity.class , value);
+         // Wrong            ReflectionUtils.setField(fieldToBeUpdated, EmployeeEntity.class , value);
+            ReflectionUtils.setField(fieldToBeUpdated, employeeEntity, value);
         });
         return mapper.map(employeeRepository.save(employeeEntity), EmployeeDto.class);
     }
+
+
+    public boolean deleteEmployeeById(Long employeeId) {
+//        if(isExistByEmployeeId(employeeId)) {
+//            employeeRepository.deleteById(employeeId);
+//            return  true;
+//        }
+//        return false;
+//        boolean exists = employeeRepository.existsById(employeeId);
+//        if (!exists) throw new ResourceNotFoundException("Employee with id "+employeeId+" was not found ");
+        isExistByEmployeeId(employeeId);
+        employeeRepository.deleteById(employeeId);
+        return true;
+    }
+
 }

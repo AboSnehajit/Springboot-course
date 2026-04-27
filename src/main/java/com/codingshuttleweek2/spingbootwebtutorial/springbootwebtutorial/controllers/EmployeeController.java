@@ -87,16 +87,6 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.updateEmployeeById(employeeId,employeeDto));
     }
 
-    @DeleteMapping(path="/{employeeId}")
-    public ResponseEntity<Boolean> deleteEmployeeById( @PathVariable Long employeeId)
-    {
-        boolean gotDeleted= employeeService.deleteEmployeeById(employeeId);
-        if (gotDeleted)
-            ResponseEntity.ok(true);
-
-        return ResponseEntity.notFound().build();
-//        return ResponseEntity.ok(employeeService.deleteEmployeeById(employeeId));
-    }
 
     @PatchMapping(path="/{employeeId}")
     public ResponseEntity<EmployeeDto> updatePartialEmployee(@RequestBody Map<String, Object> updates
@@ -113,11 +103,15 @@ public class EmployeeController {
 
         return ResponseEntity.ok(employeeDto);
     }
+    @DeleteMapping(path="/{employeeId}")
+    public ResponseEntity<Boolean> deleteEmployeeById( @PathVariable Long employeeId)
+    {
+        boolean gotDeleted= employeeService.deleteEmployeeById(employeeId);
+        if (gotDeleted)
+            ResponseEntity.ok(true);
 
-
-
-
-
-
+        return ResponseEntity.notFound().build();
+//        return ResponseEntity.ok(employeeService.deleteEmployeeById(employeeId));
+    }
 
 }

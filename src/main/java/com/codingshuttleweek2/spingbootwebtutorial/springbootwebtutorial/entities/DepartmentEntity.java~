@@ -1,0 +1,44 @@
+package com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.entities;
+
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name="departments")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+
+public class DepartmentEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long DepId;
+
+    @Column
+    private String title;
+
+    private Boolean isActive;
+
+    private LocalDateTime createdAt;
+
+    private Integer employeeCount;
+
+    private Double budget;
+
+    private String deptCode;
+
+    private String departmentEmail;
+
+    private String website;
+
+
+}

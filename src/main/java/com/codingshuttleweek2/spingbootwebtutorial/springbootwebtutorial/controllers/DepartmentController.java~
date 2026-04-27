@@ -1,0 +1,80 @@
+package com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.controllers;
+
+
+import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.dto.DepartmentDto;
+import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.entities.DepartmentEntity;
+import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.exception.ResourceNotFoundException;
+import com.codingshuttleweek2.spingbootwebtutorial.springbootwebtutorial.services.DepartmentService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/departments")
+public class DepartmentController {
+
+    final DepartmentService departmentService;
+
+
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
+
+
+
+    @GetMapping()
+    ResponseEntity<List<DepartmentDto>> getAllDepartments(@RequestParam(required = false) String title ,
+                                           @RequestParam(required = false) String deptCode){
+     return ResponseEntity.ok(departmentService.getAllDepartments());
+
+     //more suitable for getbyId as it ill return 404 if not found
+    //return ResponseEntity.of(Optional.ofNullable(departmentService.getAllDepartments()));
+    }
+
+    @GetMapping("/{departmentId}")
+    ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable Long departmentId){
+
+        Optional<DepartmentDto> response = departmentService.getDepartmentById(departmentId);
+        return response.map(departmentDto -> ResponseEntity.ok(departmentDto))
+                .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with id " +departmentId));
+
+    }
+
+    @PostMapping()
+    ResponseEntity<DepartmentDto> createDepartment ( @RequestBody  @Valid DepartmentDto inputDepartment){
+
+        DepartmentDto  createdDepartment = departmentService.createDepartment(inputDepartment);
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(createdDepartment);
+    }
+
+    @PutMapping("/{departmentId}")
+    ResponseEntity<DepartmentDto> updateDepartment (@RequestBody @Valid DepartmentDto updateDepartment,
+                                                    @PathVariable Long departmentId)
+    {
+      // i need to only send back the response and the updated department
+      DepartmentDto updatedDepartment = departmentService.updateDepartmentById(departmentId, updateDepartment);
+      return ResponseEntity.ok(updatedDepartment);
+
+    }
+
+    @PatchMapping(path="/{departmentId}")
+    public  ResponseEntity<DepartmentDto > updatePartialDepartment( @RequestBody Map<String , Object> updates ,
+                                                                    @PathVariable Long  departmentId)
+    {
+        return ResponseEntity.ok(departmentService.updatePartialDepartment (departmentId, updates));
+    }
+
+    @DeleteMapping(path="/{departmentId}")
+    public ResponseEntity<Boolean> deleteDepartmentById(@PathVariable Long departmentId)
+    {
+        return ResponseEntity.ok(departmentService.deleteDepartmentById(departmentId));
+    }
+
+
+
+}
